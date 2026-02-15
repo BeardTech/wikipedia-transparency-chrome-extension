@@ -1,0 +1,116 @@
+{
+  "extName": {
+    "message": "Wikipedia Transparency"
+  },
+  "extDescription": {
+    "message": "Mostra segnali di fiducia e di possibile influenza nelle pagine di Wikipedia."
+  },
+  "bannerTitle": {
+    "message": "Wikipedia Transparency:"
+  },
+  "statusAnalyzing": {
+    "message": "Analisi in corso..."
+  },
+  "errorUnableScore": {
+    "message": "Impossibile calcolare il punteggio."
+  },
+  "errorAnalysisUnavailable": {
+    "message": "Analisi non disponibile su questa pagina."
+  },
+  "errorPageMissing": {
+    "message": "Pagina mancante"
+  },
+  "errorApiPrefix": {
+    "message": "API"
+  },
+  "errorApiRetryExhausted": {
+    "message": "Tentativi API esauriti"
+  },
+  "unknownUser": {
+    "message": "Sconosciuto"
+  },
+  "maskedUser": {
+    "message": "Utente mascherato"
+  },
+  "riskLow": {
+    "message": "Rischio basso"
+  },
+  "riskMedium": {
+    "message": "Rischio moderato"
+  },
+  "riskHigh": {
+    "message": "Rischio alto"
+  },
+  "whyPrefix": {
+    "message": "Perche: $1"
+  },
+  "labelConfidence": {
+    "message": "Indice di fiducia: $1/100"
+  },
+  "labelWords": {
+    "message": "Parole: $1"
+  },
+  "labelQuality": {
+    "message": "Etichetta qualita: $1"
+  },
+  "labelRecentContributors": {
+    "message": "Ultimi 3 contributori:"
+  },
+  "diffLinkText": {
+    "message": "diff"
+  },
+  "labelTopContributors": {
+    "message": "Principali contributori:"
+  },
+  "noteBaseScore": {
+    "message": "Nota: punteggio e lista contributori (per parole aggiunte) sono calcolati sulle ultime $1 revisioni."
+  },
+  "noContributorData": {
+    "message": "Nessun dato contributore utilizzabile."
+  },
+  "wordsAddedUnit": {
+    "message": "parole aggiunte"
+  },
+  "reasonVeryRecentLowHistory": {
+    "message": "pagina molto recente con storico molto limitato"
+  },
+  "reasonRecentLimitedHistory": {
+    "message": "pagina recente con storico ancora limitato"
+  },
+  "reasonYoungPartialHistory": {
+    "message": "pagina giovane con profondita storica parziale"
+  },
+  "reasonHighActivity3Months": {
+    "message": "alta attivita negli ultimi 3 mesi"
+  },
+  "reasonSuddenAcceleration3Months": {
+    "message": "accelerazione improvvisa delle modifiche in 3 mesi"
+  },
+  "reasonEditWar3Months": {
+    "message": "probabile guerra di modifiche negli ultimi 3 mesi"
+  },
+  "summaryRevisions": {
+    "message": "$1 revisioni"
+  },
+  "summaryContributors": {
+    "message": "$1 contributori"
+  },
+  "summaryReverts": {
+    "message": "$1% reverts"
+  },
+  "summaryEdits90Days": {
+    "message": "$1 modifiche in 90 giorni"
+  },
+  "summaryPageAgeDays": {
+    "message": "eta pagina: $1 giorni"
+  },
+  "qualityAdq": {
+    "message": "Voce in vetrina"
+  },
+  "qualityBa": {
+    "message": "Voce di qualita"
+  },
+  "qualityNone": {
+    "message": "Nessuna etichetta rilevata"
+  }
+}

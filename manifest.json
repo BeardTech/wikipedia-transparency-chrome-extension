@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "0.1.0",
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "host_permissions": ["https://*.wikipedia.org/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.wikipedia.org/wiki/*"],
+      "exclude_globs": [
+        "*://*.wikipedia.org/wiki/*:*",
+        "*://*.wikipedia.org/wiki/*/*"
+      ],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

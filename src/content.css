@@ -1,0 +1,59 @@
+#wiki-transparency-banner {
+  position: relative;
+  z-index: 9999;
+  margin: 10px 0;
+  border: 1px solid #cfdccd;
+  border-left: 4px solid #0b6e4f;
+  border-radius: 8px;
+  background: #f4faf2;
+  color: #102019;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 8px 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+#wiki-transparency-banner .wt-row {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 2px;
+  align-items: baseline;
+}
+
+#wiki-transparency-banner .wt-row + .wt-row {
+  margin-top: 6px;
+}
+
+#wiki-transparency-banner .wt-score {
+  font-weight: 700;
+  font-size: 14px;
+  color: #07543c;
+}
+
+#wiki-transparency-banner .wt-risk.low {
+  color: #1f7a3c;
+}
+
+#wiki-transparency-banner .wt-risk.medium {
+  color: #c26f00;
+}
+
+#wiki-transparency-banner .wt-risk.high {
+  color: #9f2b2b;
+}
+
+#wiki-transparency-banner .wt-meta {
+  color: #456157;
+}
+
+#wiki-transparency-banner .wt-why {
+  color: #2c4c40;
+  font-size: 12px;
+}
+
+#wiki-transparency-banner .wt-note {
+  color: #557468;
+  font-size: 11px;
+}

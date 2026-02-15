@@ -1,0 +1,116 @@
+{
+  "extName": {
+    "message": "Wikipedia Transparency"
+  },
+  "extDescription": {
+    "message": "Exibe sinais de confianca e de influencia potencial em paginas da Wikipedia."
+  },
+  "bannerTitle": {
+    "message": "Wikipedia Transparency:"
+  },
+  "statusAnalyzing": {
+    "message": "Analisando..."
+  },
+  "errorUnableScore": {
+    "message": "Nao foi possivel calcular a pontuacao."
+  },
+  "errorAnalysisUnavailable": {
+    "message": "Analise indisponivel nesta pagina."
+  },
+  "errorPageMissing": {
+    "message": "Pagina ausente"
+  },
+  "errorApiPrefix": {
+    "message": "API"
+  },
+  "errorApiRetryExhausted": {
+    "message": "Tentativas da API esgotadas"
+  },
+  "unknownUser": {
+    "message": "Desconhecido"
+  },
+  "maskedUser": {
+    "message": "Usuario mascarado"
+  },
+  "riskLow": {
+    "message": "Risco baixo"
+  },
+  "riskMedium": {
+    "message": "Risco moderado"
+  },
+  "riskHigh": {
+    "message": "Risco alto"
+  },
+  "whyPrefix": {
+    "message": "Por que: $1"
+  },
+  "labelConfidence": {
+    "message": "Indice de confianca: $1/100"
+  },
+  "labelWords": {
+    "message": "Palavras: $1"
+  },
+  "labelQuality": {
+    "message": "Rotulo de qualidade: $1"
+  },
+  "labelRecentContributors": {
+    "message": "Ultimos 3 contribuidores:"
+  },
+  "diffLinkText": {
+    "message": "diff"
+  },
+  "labelTopContributors": {
+    "message": "Principais contribuidores:"
+  },
+  "noteBaseScore": {
+    "message": "Nota: a pontuacao e a lista de contribuidores (por palavras adicionadas) sao calculadas com base nas ultimas $1 revisoes."
+  },
+  "noContributorData": {
+    "message": "Nenhum dado de contribuidor utilizavel."
+  },
+  "wordsAddedUnit": {
+    "message": "palavras adicionadas"
+  },
+  "reasonVeryRecentLowHistory": {
+    "message": "pagina muito recente com historico muito limitado"
+  },
+  "reasonRecentLimitedHistory": {
+    "message": "pagina recente com historico ainda limitado"
+  },
+  "reasonYoungPartialHistory": {
+    "message": "pagina jovem com profundidade historica parcial"
+  },
+  "reasonHighActivity3Months": {
+    "message": "alta atividade nos ultimos 3 meses"
+  },
+  "reasonSuddenAcceleration3Months": {
+    "message": "aceleracao repentina de edicoes em 3 meses"
+  },
+  "reasonEditWar3Months": {
+    "message": "provavel guerra de edicoes nos ultimos 3 meses"
+  },
+  "summaryRevisions": {
+    "message": "$1 revisoes"
+  },
+  "summaryContributors": {
+    "message": "$1 contribuidores"
+  },
+  "summaryReverts": {
+    "message": "$1% reverts"
+  },
+  "summaryEdits90Days": {
+    "message": "$1 edicoes em 90 dias"
+  },
+  "summaryPageAgeDays": {
+    "message": "idade da pagina: $1 dias"
+  },
+  "qualityAdq": {
+    "message": "Artigo destacado"
+  },
+  "qualityBa": {
+    "message": "Artigo bom"
+  },
+  "qualityNone": {
+    "message": "Nenhum rotulo detectado"
+  }
+}

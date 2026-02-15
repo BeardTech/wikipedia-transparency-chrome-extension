@@ -1,0 +1,116 @@
+{
+  "extName": {
+    "message": "Wikipedia Transparency"
+  },
+  "extDescription": {
+    "message": "Displays trust and potential influence signals on Wikipedia pages."
+  },
+  "bannerTitle": {
+    "message": "Wikipedia Transparency:"
+  },
+  "statusAnalyzing": {
+    "message": "Analyzing..."
+  },
+  "errorUnableScore": {
+    "message": "Unable to compute score."
+  },
+  "errorAnalysisUnavailable": {
+    "message": "Analysis unavailable on this page."
+  },
+  "errorPageMissing": {
+    "message": "Missing page"
+  },
+  "errorApiPrefix": {
+    "message": "API"
+  },
+  "errorApiRetryExhausted": {
+    "message": "API retry exhausted"
+  },
+  "unknownUser": {
+    "message": "Unknown"
+  },
+  "maskedUser": {
+    "message": "Masked user"
+  },
+  "riskLow": {
+    "message": "Low risk"
+  },
+  "riskMedium": {
+    "message": "Moderate risk"
+  },
+  "riskHigh": {
+    "message": "High risk"
+  },
+  "whyPrefix": {
+    "message": "Why: $1"
+  },
+  "labelConfidence": {
+    "message": "Trust score: $1/100"
+  },
+  "labelWords": {
+    "message": "Words: $1"
+  },
+  "labelQuality": {
+    "message": "Quality label: $1"
+  },
+  "labelRecentContributors": {
+    "message": "Last 3 contributors:"
+  },
+  "diffLinkText": {
+    "message": "diff"
+  },
+  "labelTopContributors": {
+    "message": "Top contributors:"
+  },
+  "noteBaseScore": {
+    "message": "Note: score and contributor list (by added words) are calculated on the last $1 revisions."
+  },
+  "noContributorData": {
+    "message": "No usable contributor data."
+  },
+  "wordsAddedUnit": {
+    "message": "added words"
+  },
+  "reasonVeryRecentLowHistory": {
+    "message": "very recent page with very limited history"
+  },
+  "reasonRecentLimitedHistory": {
+    "message": "recent page with still limited history"
+  },
+  "reasonYoungPartialHistory": {
+    "message": "young page with partial historical depth"
+  },
+  "reasonHighActivity3Months": {
+    "message": "high activity over the last 3 months"
+  },
+  "reasonSuddenAcceleration3Months": {
+    "message": "sudden edit acceleration over 3 months"
+  },
+  "reasonEditWar3Months": {
+    "message": "probable edit war over the last 3 months"
+  },
+  "summaryRevisions": {
+    "message": "$1 revisions"
+  },
+  "summaryContributors": {
+    "message": "$1 contributors"
+  },
+  "summaryReverts": {
+    "message": "$1% reverts"
+  },
+  "summaryEdits90Days": {
+    "message": "$1 edits in 90 days"
+  },
+  "summaryPageAgeDays": {
+    "message": "page age: $1 days"
+  },
+  "qualityAdq": {
+    "message": "Featured article"
+  },
+  "qualityBa": {
+    "message": "Good article"
+  },
+  "qualityNone": {
+    "message": "No label detected"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "extName": {
+    "message": "Wikipedia Transparency"
+  },
+  "extDescription": {
+    "message": "Affiche sur Wikipedia des signaux de confiance et d'influence potentielle."
+  },
+  "bannerTitle": {
+    "message": "Wikipedia Transparency:"
+  },
+  "statusAnalyzing": {
+    "message": "Analyse en cours..."
+  },
+  "errorUnableScore": {
+    "message": "Impossible de calculer le score."
+  },
+  "errorAnalysisUnavailable": {
+    "message": "Analyse indisponible sur cette page."
+  },
+  "errorPageMissing": {
+    "message": "Page manquante"
+  },
+  "errorApiPrefix": {
+    "message": "API"
+  },
+  "errorApiRetryExhausted": {
+    "message": "API retry exhausted"
+  },
+  "unknownUser": {
+    "message": "Inconnu"
+  },
+  "maskedUser": {
+    "message": "Utilisateur masque"
+  },
+  "riskLow": {
+    "message": "Risque faible"
+  },
+  "riskMedium": {
+    "message": "Risque modere"
+  },
+  "riskHigh": {
+    "message": "Risque eleve"
+  },
+  "whyPrefix": {
+    "message": "Pourquoi: $1"
+  },
+  "labelConfidence": {
+    "message": "Indice de confiance: $1/100"
+  },
+  "labelWords": {
+    "message": "Mots: $1"
+  },
+  "labelQuality": {
+    "message": "Label qualite: $1"
+  },
+  "labelRecentContributors": {
+    "message": "3 derniers contributeurs:"
+  },
+  "diffLinkText": {
+    "message": "diff"
+  },
+  "labelTopContributors": {
+    "message": "Contributeurs principaux:"
+  },
+  "noteBaseScore": {
+    "message": "Note: le score et la liste des contributeurs (par mots ajoutes) sont calcules sur les $1 dernieres revisions."
+  },
+  "noContributorData": {
+    "message": "Aucune donnee contributeur exploitable."
+  },
+  "wordsAddedUnit": {
+    "message": "mots ajoutes"
+  },
+  "reasonVeryRecentLowHistory": {
+    "message": "page tres recente avec tres peu d'historique"
+  },
+  "reasonRecentLimitedHistory": {
+    "message": "page recente avec historique encore limite"
+  },
+  "reasonYoungPartialHistory": {
+    "message": "page jeune avec profondeur historique partielle"
+  },
+  "reasonHighActivity3Months": {
+    "message": "forte suractivite sur les 3 derniers mois"
+  },
+  "reasonSuddenAcceleration3Months": {
+    "message": "acceleration soudaine des modifications sur 3 mois"
+  },
+  "reasonEditWar3Months": {
+    "message": "guerre d'edition probable sur les 3 derniers mois"
+  },
+  "summaryRevisions": {
+    "message": "$1 revisions"
+  },
+  "summaryContributors": {
+    "message": "$1 contributeurs"
+  },
+  "summaryReverts": {
+    "message": "$1% de reverts"
+  },
+  "summaryEdits90Days": {
+    "message": "$1 edits sur 90 jours"
+  },
+  "summaryPageAgeDays": {
+    "message": "page agee de $1 jours"
+  },
+  "qualityAdq": {
+    "message": "Article de qualite"
+  },
+  "qualityBa": {
+    "message": "Bon article"
+  },
+  "qualityNone": {
+    "message": "Aucun label detecte"
+  }
+}

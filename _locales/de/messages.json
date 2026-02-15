@@ -1,0 +1,116 @@
+{
+  "extName": {
+    "message": "Wikipedia Transparency"
+  },
+  "extDescription": {
+    "message": "Zeigt Vertrauens- und potenzielle Einfluss-Signale auf Wikipedia-Seiten an."
+  },
+  "bannerTitle": {
+    "message": "Wikipedia Transparency:"
+  },
+  "statusAnalyzing": {
+    "message": "Analyse laeuft..."
+  },
+  "errorUnableScore": {
+    "message": "Score kann nicht berechnet werden."
+  },
+  "errorAnalysisUnavailable": {
+    "message": "Analyse auf dieser Seite nicht verfuegbar."
+  },
+  "errorPageMissing": {
+    "message": "Seite fehlt"
+  },
+  "errorApiPrefix": {
+    "message": "API"
+  },
+  "errorApiRetryExhausted": {
+    "message": "API-Wiederholungen erschoepft"
+  },
+  "unknownUser": {
+    "message": "Unbekannt"
+  },
+  "maskedUser": {
+    "message": "Maskierter Benutzer"
+  },
+  "riskLow": {
+    "message": "Niedriges Risiko"
+  },
+  "riskMedium": {
+    "message": "Mittleres Risiko"
+  },
+  "riskHigh": {
+    "message": "Hohes Risiko"
+  },
+  "whyPrefix": {
+    "message": "Warum: $1"
+  },
+  "labelConfidence": {
+    "message": "Vertrauensscore: $1/100"
+  },
+  "labelWords": {
+    "message": "Woerter: $1"
+  },
+  "labelQuality": {
+    "message": "Qualitaetslabel: $1"
+  },
+  "labelRecentContributors": {
+    "message": "Letzte 3 Mitwirkende:"
+  },
+  "diffLinkText": {
+    "message": "diff"
+  },
+  "labelTopContributors": {
+    "message": "Top-Mitwirkende:"
+  },
+  "noteBaseScore": {
+    "message": "Hinweis: Score und Mitwirkendenliste (nach hinzugefuegten Woertern) werden auf Basis der letzten $1 Versionen berechnet."
+  },
+  "noContributorData": {
+    "message": "Keine verwertbaren Mitwirkenden-Daten."
+  },
+  "wordsAddedUnit": {
+    "message": "hinzugefuegte Woerter"
+  },
+  "reasonVeryRecentLowHistory": {
+    "message": "sehr neue Seite mit sehr wenig Historie"
+  },
+  "reasonRecentLimitedHistory": {
+    "message": "neue Seite mit noch begrenzter Historie"
+  },
+  "reasonYoungPartialHistory": {
+    "message": "junge Seite mit teilweiser historischer Tiefe"
+  },
+  "reasonHighActivity3Months": {
+    "message": "hohe Aktivitaet in den letzten 3 Monaten"
+  },
+  "reasonSuddenAcceleration3Months": {
+    "message": "ploetzliche Bearbeitungs-Beschleunigung ueber 3 Monate"
+  },
+  "reasonEditWar3Months": {
+    "message": "wahrscheinlicher Edit-War in den letzten 3 Monaten"
+  },
+  "summaryRevisions": {
+    "message": "$1 Versionen"
+  },
+  "summaryContributors": {
+    "message": "$1 Mitwirkende"
+  },
+  "summaryReverts": {
+    "message": "$1% Reverts"
+  },
+  "summaryEdits90Days": {
+    "message": "$1 Bearbeitungen in 90 Tagen"
+  },
+  "summaryPageAgeDays": {
+    "message": "Seitenalter: $1 Tage"
+  },
+  "qualityAdq": {
+    "message": "Exzellenter Artikel"
+  },
+  "qualityBa": {
+    "message": "Lesenswerter Artikel"
+  },
+  "qualityNone": {
+    "message": "Kein Label erkannt"
+  }
+}
