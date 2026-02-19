@@ -15,6 +15,7 @@ const REVERT_KEYWORDS = ["revert", "undid", "rv", "rollback", "annulation"];
 
 const MAX_META_REVISIONS = 300;
 const WAR_WINDOW_DAYS = 90;
+const NEW_ACCOUNT_WINDOW_DAYS = 180;
 const CACHE_TTL_MS = 10 * 60 * 1000;
 const API_MAX_RETRIES = 3;
 
@@ -81,7 +82,8 @@ async function renderPageScore(articleRoot) {
       return;
     }
 
-    const analysis = analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditorsInfo);
+    const userProfiles = await fetchUserProfiles(revisions.map((rev) => (rev?.user ? rev.user.trim() : "")));
+    const analysis = analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditorsInfo, userProfiles);
     const wordCount = getArticleWordCount(articleRoot);
     const qualityLabel = detectQualityLabel(categories);
     const riskLabel = analysis.risk === "low" ? t("riskLow") : analysis.risk === "medium" ? t("riskMedium") : t("riskHigh");
@@ -125,7 +127,7 @@ function renderTopAuthors(topAuthors) {
   return topAuthors
     .map((author) => {
       const profileUrl = getAuthorProfileUrl(author.user);
-      return `<span class="wt-meta"><a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(author.user)}</a> (${author.addedWords} ${escapeHtml(t("wordsAddedUnit"))}, ${author.sharePct}%)</span>`;
+      return `<span class="wt-meta"><a href="${profileUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(author.user)}</a> (${author.addedWords} ${escapeHtml(t("wordsAddedUnit"))}, ${author.sharePct}%, ${escapeHtml(t("labelContributorLevel", [author.levelLabel]))})</span>`;
     })
     .join(" ");
 }
@@ -206,6 +208,57 @@ async function fetchRevisions(title, maxRevisions, revisionParams) {
   const result = collected.slice(0, maxRevisions);
   requestCache.set(cacheKey, { ts: Date.now(), data: result });
   return result;
+}
+
+async function fetchUserProfiles(users) {
+  const filteredUsers = Array.from(
+    new Set(
+      (users || [])
+        .map((user) => String(user || "").trim())
+        .filter((user) => user && !/^\d{1,3}(\.\d{1,3}){3}$/.test(user))
+    )
+  );
+  if (!filteredUsers.length) return new Map();
+
+  const cacheKey = `users:${filteredUsers.map((name) => name.toLowerCase()).sort().join("|")}`;
+  const cached = requestCache.get(cacheKey);
+  if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
+    return cached.data;
+  }
+
+  const userProfiles = new Map();
+  const chunkSize = 50;
+
+  for (let i = 0; i < filteredUsers.length; i += chunkSize) {
+    const chunk = filteredUsers.slice(i, i + chunkSize);
+    const params = new URLSearchParams({
+      action: "query",
+      format: "json",
+      formatversion: "2",
+      list: "users",
+      ususers: chunk.join("|"),
+      usprop: "editcount|registration|groups",
+      origin: "*",
+      maxlag: "5"
+    });
+
+    const data = await fetchApiWithRetry(params.toString());
+    const usersData = data?.query?.users || [];
+    for (const userData of usersData) {
+      const name = String(userData?.name || "").trim();
+      if (!name) continue;
+      userProfiles.set(name.toLowerCase(), {
+        name,
+        editcount: typeof userData.editcount === "number" ? userData.editcount : 0,
+        registration: userData.registration || null,
+        groups: Array.isArray(userData.groups) ? userData.groups : [],
+        missing: Boolean(userData.missing)
+      });
+    }
+  }
+
+  requestCache.set(cacheKey, { ts: Date.now(), data: userProfiles });
+  return userProfiles;
 }
 
 async function fetchPageCategories(title) {
@@ -342,7 +395,7 @@ async function fetchApiWithRetry(queryString) {
   throw new Error(t("errorApiRetryExhausted"));
 }
 
-function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditorsInfo) {
+function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditorsInfo, userProfiles) {
   const total = revisions.length;
   const editorCounts = new Map();
   const addedCharsByEditor = new Map();
@@ -358,6 +411,8 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
   let edits90Days = 0;
   let editsPrev90Days = 0;
   let revertEdits90Days = 0;
+  let newcomerEdits90Days = 0;
+  let recognizedEdits90Days = 0;
   const whySignals = [];
 
   for (const rev of revisions) {
@@ -377,11 +432,13 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
       if (ageMs <= last90DaysMs) {
         edits90Days += 1;
         if (containsKeyword(comment, REVERT_KEYWORDS)) revertEdits90Days += 1;
+        const contributorLevel = getContributorLevel(user, rev.userid, userProfiles, now);
+        if (contributorLevel.level === "new") newcomerEdits90Days += 1;
+        if (contributorLevel.recognized) recognizedEdits90Days += 1;
       } else if (ageMs <= last180DaysMs) {
         editsPrev90Days += 1;
       }
     }
-
   }
 
   // Estimate written volume by contributor: keep only positive size deltas (added content).
@@ -415,9 +472,33 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
   const topEditorShare = ratio(topEditorEdits, total);
   const edits90Ratio = ratio(edits90Days, total);
   const revert90Ratio = ratio(revertEdits90Days, Math.max(1, edits90Days));
+  const newcomer90Ratio = ratio(newcomerEdits90Days, Math.max(1, edits90Days));
+  const recognized90Ratio = ratio(recognizedEdits90Days, Math.max(1, edits90Days));
   const pageCreatedTs = Date.parse(firstRevision?.timestamp || "");
   const pageAgeDays = Number.isNaN(pageCreatedTs) ? null : Math.floor((now - pageCreatedTs) / (24 * 60 * 60 * 1000));
   const isNewPage = pageAgeDays !== null && pageAgeDays <= 120;
+
+  const totalAddedChars = Array.from(addedCharsByEditor.values()).reduce((sum, value) => sum + value, 0);
+  const topAuthors = Array.from(addedCharsByEditor.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([user, addedChars]) => {
+      const profile = getContributorLevel(user, null, userProfiles, now);
+      return {
+        user,
+        addedWords: estimateWordsFromChars(addedChars),
+        sharePct: totalAddedChars > 0 ? Math.round((addedChars / totalAddedChars) * 100) : 0,
+        level: profile.level,
+        levelLabel: t(profile.labelKey),
+        recognized: profile.recognized,
+        addedChars
+      };
+    });
+  const recognizedTopShare = totalAddedChars > 0
+    ? topAuthors
+      .filter((author) => author.recognized)
+      .reduce((sum, author) => sum + author.addedChars, 0) / totalAddedChars
+    : 0;
 
   let score = 80;
   if (uniqueEditors >= 40) score += 8;
@@ -430,6 +511,11 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
   if (disputeRatio > 0.1) score -= 8;
   if (recentRatio > 0.55) score -= 10;
   if (total >= 200 && uniqueEditors >= 80 && topEditorShare < 0.12) score += 8;
+  if (recognizedTopShare >= 0.55) score += 10;
+  if (recognizedTopShare < 0.25 && topAuthors.length >= 3) score -= 14;
+  if (recognized90Ratio >= 0.45 && edits90Days >= 20) score += 6;
+  if (newcomer90Ratio >= 0.35 && edits90Days >= 20) score -= 12;
+  if (newcomer90Ratio >= 0.55 && edits90Days >= 35) score -= 8;
 
   if (isNewPage) {
     if (total < 20 && pageAgeDays <= 30) {
@@ -457,6 +543,15 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
     }
   }
 
+  if (recognizedTopShare >= 0.55 && topAuthors.length >= 2) {
+    whySignals.push(t("reasonTopAuthorsRecognized"));
+  } else if (recognizedTopShare < 0.25 && topAuthors.length >= 3) {
+    whySignals.push(t("reasonTopAuthorsUnrecognized"));
+  }
+  if (newcomer90Ratio >= 0.35 && edits90Days >= 20) {
+    whySignals.push(t("reasonManyNewEditors3Months"));
+  }
+
   score = Math.max(0, Math.min(100, Math.round(score)));
 
   let risk = "low";
@@ -467,20 +562,12 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
     t("summaryRevisions", [formatCount(totalEditsInfo, total)]),
     t("summaryContributors", [formatCount(totalEditorsInfo, uniqueEditors)]),
     t("summaryReverts", [String(Math.round(revertRatio * 100))]),
-    t("summaryEdits90Days", [String(edits90Days)])
+    t("summaryEdits90Days", [String(edits90Days)]),
+    t("summaryTopTrustedShare", [String(Math.round(recognizedTopShare * 100))]),
+    t("summaryNewEditors90Days", [String(Math.round(newcomer90Ratio * 100))])
   ];
 
   if (isNewPage) summaryParts.push(t("summaryPageAgeDays", [String(pageAgeDays)]));
-
-  const totalAddedChars = Array.from(addedCharsByEditor.values()).reduce((sum, value) => sum + value, 0);
-  const topAuthors = Array.from(addedCharsByEditor.entries())
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([user, addedChars]) => ({
-      user,
-      addedWords: estimateWordsFromChars(addedChars),
-      sharePct: totalAddedChars > 0 ? Math.round((addedChars / totalAddedChars) * 100) : 0
-    }));
 
   return {
     score,
@@ -488,7 +575,7 @@ function analyzeRevisions(revisions, firstRevision, totalEditsInfo, totalEditors
     baseRevisionCount: total,
     summary: summaryParts.join(" | "),
     whyReason: whySignals.length ? whySignals.slice(0, 2).join(" ; ") : "",
-    topAuthors
+    topAuthors: topAuthors.map(({ addedChars, ...author }) => author)
   };
 }
 
@@ -528,8 +615,9 @@ function containsKeyword(text, keywords) {
 }
 
 function isAnonymousUser(user, userId) {
-  if (typeof userId !== "number") return true;
-  return /^\d{1,3}(\.\d{1,3}){3}$/.test(user);
+  const isIpLike = /^\d{1,3}(\.\d{1,3}){3}$/.test(user);
+  if (typeof userId === "number") return userId === 0 || isIpLike;
+  return isIpLike;
 }
 
 function ratio(value, total) {
@@ -549,6 +637,43 @@ function formatCount(countInfo, fallback) {
 function estimateWordsFromChars(chars) {
   if (!chars || chars <= 0) return 0;
   return Math.round(chars / 5.5);
+}
+
+function getContributorLevel(user, userId, userProfiles, nowTs) {
+  if (isAnonymousUser(user, userId)) {
+    return { level: "anonymous", labelKey: "levelAnonymous", recognized: false };
+  }
+
+  const normalized = String(user || "").trim().toLowerCase();
+  const profile = userProfiles?.get(normalized);
+  if (!profile || profile.missing) {
+    return { level: "unknown", labelKey: "levelUnknown", recognized: false };
+  }
+
+  const groups = new Set((profile.groups || []).map((group) => group.toLowerCase()));
+  const editcount = typeof profile.editcount === "number" ? profile.editcount : 0;
+  const registrationTs = Date.parse(profile.registration || "");
+  const accountAgeDays = Number.isNaN(registrationTs)
+    ? null
+    : Math.floor((nowTs - registrationTs) / (24 * 60 * 60 * 1000));
+  const isNewAccount = accountAgeDays !== null && accountAgeDays <= NEW_ACCOUNT_WINDOW_DAYS;
+
+  const highTrustGroups = ["sysop", "bureaucrat", "checkuser", "oversight", "interface-admin", "steward", "arbcom"];
+  const trustedGroups = ["editor", "reviewer", "autoreviewer", "extendedconfirmed", "patroller", "rollbacker", "templateeditor"];
+
+  if (highTrustGroups.some((group) => groups.has(group)) || editcount >= 5000) {
+    return { level: "recognized", labelKey: "levelRecognized", recognized: true };
+  }
+  if (trustedGroups.some((group) => groups.has(group)) || editcount >= 2000) {
+    return { level: "established", labelKey: "levelEstablished", recognized: true };
+  }
+  if (editcount >= 300) {
+    return { level: "intermediate", labelKey: "levelIntermediate", recognized: false };
+  }
+  if (isNewAccount || editcount < 50) {
+    return { level: "new", labelKey: "levelNew", recognized: false };
+  }
+  return { level: "intermediate", labelKey: "levelIntermediate", recognized: false };
 }
 
 function detectQualityLabel(categories) {

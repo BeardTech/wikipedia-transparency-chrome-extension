@@ -71,6 +71,27 @@
   "wordsAddedUnit": {
     "message": "added words"
   },
+  "labelContributorLevel": {
+    "message": "level: $1"
+  },
+  "levelRecognized": {
+    "message": "recognized"
+  },
+  "levelEstablished": {
+    "message": "established"
+  },
+  "levelIntermediate": {
+    "message": "intermediate"
+  },
+  "levelNew": {
+    "message": "new account"
+  },
+  "levelAnonymous": {
+    "message": "anonymous"
+  },
+  "levelUnknown": {
+    "message": "unknown"
+  },
   "reasonVeryRecentLowHistory": {
     "message": "very recent page with very limited history"
   },
@@ -89,6 +110,15 @@
   "reasonEditWar3Months": {
     "message": "probable edit war over the last 3 months"
   },
+  "reasonTopAuthorsRecognized": {
+    "message": "top authors are mostly recognized contributors"
+  },
+  "reasonTopAuthorsUnrecognized": {
+    "message": "top authors are mostly low-recognition contributors"
+  },
+  "reasonManyNewEditors3Months": {
+    "message": "many recent edits are from very new accounts"
+  },
   "summaryRevisions": {
     "message": "$1 revisions"
   },
@@ -100,6 +130,12 @@
   },
   "summaryEdits90Days": {
     "message": "$1 edits in 90 days"
+  },
+  "summaryTopTrustedShare": {
+    "message": "$1% trusted top-author share"
+  },
+  "summaryNewEditors90Days": {
+    "message": "$1% edits from new accounts (90d)"
   },
   "summaryPageAgeDays": {
     "message": "page age: $1 days"

@@ -71,6 +71,27 @@
   "wordsAddedUnit": {
     "message": "mots ajoutes"
   },
+  "labelContributorLevel": {
+    "message": "niveau: $1"
+  },
+  "levelRecognized": {
+    "message": "reconnu"
+  },
+  "levelEstablished": {
+    "message": "etabli"
+  },
+  "levelIntermediate": {
+    "message": "intermediaire"
+  },
+  "levelNew": {
+    "message": "nouveau compte"
+  },
+  "levelAnonymous": {
+    "message": "anonyme"
+  },
+  "levelUnknown": {
+    "message": "inconnu"
+  },
   "reasonVeryRecentLowHistory": {
     "message": "page tres recente avec tres peu d'historique"
   },
@@ -89,6 +110,15 @@
   "reasonEditWar3Months": {
     "message": "guerre d'edition probable sur les 3 derniers mois"
   },
+  "reasonTopAuthorsRecognized": {
+    "message": "les auteurs principaux sont majoritairement reconnus"
+  },
+  "reasonTopAuthorsUnrecognized": {
+    "message": "les auteurs principaux sont majoritairement peu reconnus"
+  },
+  "reasonManyNewEditors3Months": {
+    "message": "beaucoup d'edits recents viennent de nouveaux comptes"
+  },
   "summaryRevisions": {
     "message": "$1 revisions"
   },
@@ -100,6 +130,12 @@
   },
   "summaryEdits90Days": {
     "message": "$1 edits sur 90 jours"
+  },
+  "summaryTopTrustedShare": {
+    "message": "$1% de part d'auteurs principaux reconnus"
+  },
+  "summaryNewEditors90Days": {
+    "message": "$1% d'edits de nouveaux comptes (90j)"
   },
   "summaryPageAgeDays": {
     "message": "page agee de $1 jours"
